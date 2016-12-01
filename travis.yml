@@ -1,0 +1,10 @@
+sudo: false
+
+language: java
+
+before_install: mvn install -DskipTests=true -DfinalName=cnight-$TRAVIS_TAG
+
+deploy:
+  file: target/cnight-$TRAVIS_TAG.jar
+
+script: mvn clean verify
