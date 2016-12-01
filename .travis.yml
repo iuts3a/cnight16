@@ -8,3 +8,26 @@ jdk:
 before_install: mvn install -DskipTests=true -DfinalName=cnight-$TRAVIS_TAG
 
 script: mvn clean verify
+
+before_deploy:
+  - git config --global user.email "builds@travis-ci.com"
+  - git config --global user.name "Travis CI"
+  - export GIT_TAG=$TRAVIS_BRANCH-0.1.$TRAVIS_BUILD_NUMBER
+  - git tag $GIT_TAG -a -m "Generated tag from TravisCI for build $TRAVIS_BUILD_NUMBER"
+  - git push -q https://$GITPERM@github.com/iuts3a/cnight16 --tags
+  - ls -R
+
+deploy:
+  skip_cleanup: true
+  provider: releases
+  api_key: $GITPERM
+  file:
+    - "README.md"
+    - target/cnight-$TRAVIS_TAG.jar
+  on:
+    tags: false
+    all_branches: true
+
+branches:
+  except:
+    - /^*-v[0-9]/
