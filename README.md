@@ -1,2 +1,2 @@
 # cnight16
-Nuit de l'info 2016
+[![Build Status](https://travis-ci.org/iuts3a/cnight16.svg?branch=master)](https://travis-ci.org/iuts3a/cnight16)
